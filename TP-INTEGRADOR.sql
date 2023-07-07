@@ -1,7 +1,10 @@
 -- -----------------------------------------------------
 -- Schema tp_integrador
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `tp_integrador` ;
+
+ DROP SCHEMA IF EXISTS `tp_integrador`;
+
+CREATE SCHEMA IF NOT EXISTS `tp_integrador`;
 USE `tp_integrador` ;
 -- -----------------------------------------------------
 -- Table `Producto`
@@ -12,11 +15,14 @@ USE `tp_integrador` ;
 ● Crea la tabla "producto" con al menos los campos: "id" (clave primaria), "nombre",
 "precio", "stock".*/
 
+
+DROP TABLE IF EXISTS producto;
+
 CREATE TABLE IF NOT EXISTS `producto` (
 
-producto_id INT PRIMARY KEY,
-nombre VARCHAR(45) NOT NULL,
-precio DECIMAL (5,2),
+producto_id INT AUTO_INCREMENT PRIMARY KEY,
+nombre VARCHAR(255) NOT NULL,
+precio DECIMAL (5,2) NOT NULL,
 stock INT NOT NULL
 );
 
@@ -27,12 +33,13 @@ stock INT NOT NULL
 -- -----------------------------------------------------
 -- Table `Cliente`
 -- -----------------------------------------------------
-
+DROP TABLE IF EXISTS `cliente`;
+ 
 CREATE TABLE IF NOT EXISTS `cliente` (
 cliente_id INT AUTO_INCREMENT PRIMARY KEY,
-nombre VARCHAR(45) NOT NULL,
-correo VARCHAR(45),
-dirección VARCHAR(45) NOT NULL
+nombre VARCHAR(255) NOT NULL,
+correo VARCHAR(320) NOT NULL,
+direccion VARCHAR(65) NOT NULL
 );
 
 -- -----------------------------------------------------
@@ -43,6 +50,7 @@ dirección VARCHAR(45) NOT NULL
 -- -----------------------------------------------------
 -- Table `Compra`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `compra`;
 
 CREATE TABLE IF NOT EXISTS `compra` (
 compra_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -52,10 +60,10 @@ producto_id INT NOT NULL,
 cliente_id INT NOT NULL,
 FOREIGN KEY (producto_id) 
 REFERENCES producto (producto_id)
-ON DELETE NO ACTION ON UPDATE NO ACTION,
+ON DELETE RESTRICT ON UPDATE RESTRICT,
 FOREIGN KEY (cliente_id) 
 REFERENCES cliente (cliente_id)
-ON DELETE NO ACTION ON UPDATE NO ACTION
+ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
 -- -----------------------------------------------------

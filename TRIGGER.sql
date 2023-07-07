@@ -3,23 +3,18 @@ orden de compra.*/
 
 DELIMITER //
 
-DROP TRIGGER actualizar_stock;
+   DROP TRIGGER IF EXISTS actualizar_stock;
 
-CREATE TRIGGER actualizar_stock
+CREATE TRIGGER actualizar_stockproductos_con_descuentos
 AFTER INSERT ON compra
 FOR EACH ROW
 BEGIN
     DECLARE stock_actual INT;
+    SET stock_actual = (SELECT stock FROM producto WHERE producto_id = new.producto_id);
 
     /*Actualizar el stock restando la cantidad de la orden de compra*/
     UPDATE producto
-    SET stock = stock_actual - NEW.cantidad
-    WHERE producto_id = NEW.producto_id;
-    
-    
-        /*Obtener el stock actual del producto*/
-    SELECT stock INTO stock_actual
-    FROM producto
+    SET stock = stock_actual - 1
     WHERE producto_id = NEW.producto_id;
     
 END //
